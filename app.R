@@ -7,8 +7,9 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
-library(dplyr)
+library(shiny, quietly = TRUE)
+library(dplyr, quietly = TRUE)
+library(DT, quietly = TRUE)
 # source functions
 source('func/functions.R')
 

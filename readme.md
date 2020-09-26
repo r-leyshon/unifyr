@@ -22,7 +22,10 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 * Allow user to select which columns to use as keys (multiple cols)
 * Include dimensions of each df as an output
-  * Improve UI -
+* Upload own datasets to perform joins
+* Output joined df to file
+* include a run button and pause join execution until ready
+* Improve UI -
   * Wellpanels
   * shinyhelper guidance
   * shinyhelper gif animations

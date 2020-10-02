@@ -57,10 +57,28 @@ execute_join(gapminder_africa, gapminder_full,
 # from shiny ui interaction
 # could use names subsetting, but would rather have users click on columns
 
+key_a <- names(gapminder_africa)[c(1,2)]
+
+#specify keys for join execution
+key_b <- names(gapminder_full)[c(1,2)]
 
 
+all_keys <- c(key_a =  key_b)
 
 
+execute_join(gapminder_africa, gapminder_full, left_join, all_keys)
 
+# this all seems to work fine,
+# ideas for error handling once functional - selecting columns that cannot match
+# selecting differing numbers of columns
+# also data type conversions
+
+# so what is the issue?
+# Need to check the indices that come out of the DT column selection, are they 
+# correct? 
+
+# Failing this, it could be a reactive environment issue, investigate:
+# server / client side calculation of column indices
+# various reactive functions / observers
 
 

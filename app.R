@@ -10,10 +10,15 @@
 library(shiny, quietly = TRUE)
 library(dplyr, quietly = TRUE)
 library(DT, quietly = TRUE)
+library(reactlog, quietly = TRUE)
+#library(vctrs, quietly = TRUE)
+library(magrittr, quietly = TRUE)
+
+
 # source functions
 source('func/functions.R')
 
-
+reactlog_enable()
 # load_cache --------------------------------------------------------------
 gapminder_full <- readRDS("cache/gapminder.rds")
 gapminder_africa <- readRDS("cache/gapminder_africa.rds")
@@ -42,11 +47,13 @@ ui <- fluidPage(
     # Application title
     titlePanel("unifyR"),
 
-    # Sidebar with a slider input for number of bins 
  
 fluidRow(
     column(width = 12,
 tags$h1('Step 1. Select datasets to join.')),
+
+
+# dataframe selectors -----------------------------------------------------
 
 column(width = 6,
        selectInput("df_a",
@@ -61,13 +68,21 @@ column(width = 6,
                    selected = "gapminder_full"))
 ),
 
-# Selcted dataframe heads
+
+# data heads --------------------------------------------------------------
 
 fluidRow(
-    column(width = 6, h3("Head of data 1"), tableOutput(outputId = 'table_a_head')),
-    column(width = 6, h3("Head of data 2"), tableOutput('table_b_head'))
+    #LHS
+    column(width = 6, h3("Head of data 1"), DTOutput(outputId = 'table_a_head'),
+           verbatimTextOutput('table_a_userselected')),
+    
+    #RHS
+    column(width = 6, h3("Head of data 2"), DTOutput('table_b_head'),
+           verbatimTextOutput('table_b_userselected'))
     ),
 
+
+# select a join type ------------------------------------------------------
 
 #specify join
 column(width = 12,
@@ -78,17 +93,18 @@ column(width = 12,
        selectInput("join_type",
                    "Select the type of join to perform:",
                    c('left_join', 'right_join', 'inner_join',
-                     'semi_join', 'full_join', 'anti_join',
-                     'nest_join'),
+                     'semi_join', 'full_join', 'anti_join'),
                    selected = "left_join")),
 
-#ouput view
+
+# view the output ---------------------------------------------------------
+
+#output view
 column(width = 12,
        tags$h1('Step 3. View the output data.')),
 
-
 fluidRow(
-    column(width = 12, h3("Head of output data"), tableOutput('tableOut'))
+    column(width = 12, h3("Head of output data"), DTOutput('tableOut'))
 )
 
 
@@ -97,10 +113,11 @@ fluidRow(
 # server ------------------------------------------------------------------
 
 # Define server logic 
-server <- function(input, output) {
+server <- function(input, output, session) {
 
-#generate df for selection 1
-    
+# df_a --------------------------------------------------------------------
+
+  #generate df for selection 1  
     df_a_full <- reactive({
         a <- data.frame(listed_data[[input$df_a]])
         return(a)
@@ -111,7 +128,9 @@ server <- function(input, output) {
         return(a_head)
         })
     
-    
+
+# df_b --------------------------------------------------------------------
+
     #generate df for selection 2
     df_b_full <- reactive({
         b <- data.frame(listed_data[[input$df_b]])
@@ -123,7 +142,9 @@ server <- function(input, output) {
         return(b_head)
         })
     
-    
+
+# select_join -------------------------------------------------------------
+
     join_function <- reactive({
 
         joining_with <- join_list[[input$join_type]]
@@ -131,21 +152,48 @@ server <- function(input, output) {
     })
     
     
-    
+
+# render previews ---------------------------------------------------------
+
     #render the heads for display
-    output$table_a_head <- renderTable(df_a_head())
-    output$table_b_head <- renderTable(df_b_head())
+    output$table_a_head <- renderDT(df_a_head(), selection = list(target = 'column'))
     
+    output$table_b_head <- renderDT(df_b_head(), selection = list(target = 'column'))
+    
+    
+
+# generate key column names -----------------------------------------------
+
+    #specify keys for join execution
+    key_a <- reactive(        {
+        names(df_a_full())[as.numeric(input$table_a_head_columns_selected)]})
+    # render prints of the columns selected by user
+    output$table_a_userselected <- renderPrint(        {
+        key_a()})
+    
+    #specify keys for join execution
+    key_b <- reactive(        {
+        names(df_b_full())[as.numeric(input$table_b_head_columns_selected)]})
+    # render prints of the columns selected by user
+    output$table_b_userselected <- renderPrint({
+        key_b()})
+    
+   
+
+# render the joined df ----------------------------------------------------
+
     #render the joined df
-    output$tableOut <- renderTable(
+    output$tableOut <- renderDT(
+        {
         head(
             execute_join(df_a_full(),
                          df_b_full(),
-                         join_function()
+                         join_function(),
+                         key_columns_a = key_a(),
+                         key_columns_b = key_b()
                          )
             )
-        )
-    #Note how df_subset() was used and not df_subset
+        })
 
 } # End of server
         

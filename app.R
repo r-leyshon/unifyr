@@ -1,24 +1,11 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny, quietly = TRUE)
 library(dplyr, quietly = TRUE)
 library(DT, quietly = TRUE)
-library(reactlog, quietly = TRUE)
-#library(vctrs, quietly = TRUE)
-library(magrittr, quietly = TRUE)
-
+library(shinythemes, quietly = TRUE)
 
 # source functions
 source('func/functions.R')
 
-reactlog_enable()
 # load_cache --------------------------------------------------------------
 gapminder_full <- readRDS("cache/gapminder.rds")
 gapminder_africa <- readRDS("cache/gapminder_africa.rds")
@@ -42,18 +29,18 @@ join_list <- list(left_join =  left_join,
 
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(
+ui <- fluidPage(theme = shinytheme("readable"),
 
     # Application title
-    titlePanel("unifyR"),
+    titlePanel("unifyR v1.2"),
 
- 
+wellPanel( 
 fluidRow(
     column(width = 12,
 tags$h1('Step 1. Select datasets to join.')),
 
 
-# dataframe selectors -----------------------------------------------------
+# 1. dataframe selectors -----------------------------------------------------
 
 column(width = 6,
        selectInput("df_a",
@@ -66,25 +53,34 @@ column(width = 6,
                    "Select Second Dataset:",
                    available_data,
                    selected = "gapminder_full"))
+)
 ),
-
+tags$hr(),
 
 # data heads --------------------------------------------------------------
 
 fluidRow(
     #LHS
     column(width = 6, h3("Head of data 1"), DTOutput(outputId = 'table_a_head'),
-           verbatimTextOutput('table_a_userselected')),
+           verbatimTextOutput('dimensions_a'),
+           verbatimTextOutput('colnames_a')
+           ),
     
     #RHS
     column(width = 6, h3("Head of data 2"), DTOutput('table_b_head'),
-           verbatimTextOutput('table_b_userselected'))
+           verbatimTextOutput('dimensions_b'),
+           verbatimTextOutput('colnames_b')
     ),
 
-
-# select a join type ------------------------------------------------------
+    tags$hr(),
+    
+    
+# 2. select a join type ------------------------------------------------------
 
 #specify join
+
+fluidRow(
+
 column(width = 12,
        tags$h1('Step 2. Select a join type to execute.')),
 
@@ -94,21 +90,43 @@ column(width = 12,
                    "Select the type of join to perform:",
                    c('left_join', 'right_join', 'inner_join',
                      'semi_join', 'full_join', 'anti_join'),
-                   selected = "left_join")),
+                   selected = "left_join"))
+),
 
+tags$hr(),
+# 3. select columns to join by --------------------------------------------
 
-# view the output ---------------------------------------------------------
+column(width = 12,
+       tags$h1('Step 3 (optional). Select columns to join by.'),
+       tags$h3('Choose the columns by clicking on the tables at the top 
+               of the app')),
+tags$hr(),
+# display selected key column names
+fluidRow(
+  #LHS
+  column(width = 6, h5("L.H.S. selected column(s)"), 
+         verbatimTextOutput('table_a_userselected')),
+  
+  #RHS
+  column(width = 6, h5("R.H.S. selected column(s)"), 
+         verbatimTextOutput('table_b_userselected'))
+),
+tags$hr(),
+# 4. view the output ---------------------------------------------------------
 
 #output view
 column(width = 12,
-       tags$h1('Step 3. View the output data.')),
+       tags$h1('Step 4. View the output data.')),
 
 fluidRow(
-    column(width = 12, h3("Head of output data"), DTOutput('tableOut'))
+    column(width = 12, h3("Head of output data"), DTOutput('tableOut')),
+    verbatimTextOutput('dimensions_output'),
+    verbatimTextOutput('colnames_output')
 )
 
 
 )#end of fluid page
+)
 
 # server ------------------------------------------------------------------
 
@@ -178,22 +196,69 @@ server <- function(input, output, session) {
     output$table_b_userselected <- renderPrint({
         key_b()})
     
-   
+
+# join the data -----------------------------------------------------------
+
+joined_df <- reactive({
+  execute_join(df_a_full(),
+               df_b_full(),
+               join_function(),
+               key_columns_a = key_a(),
+               key_columns_b = key_b()
+  )
+})
 
 # render the joined df ----------------------------------------------------
 
-    #render the joined df
+    #render the joined df head
     output$tableOut <- renderDT(
         {
-        head(
-            execute_join(df_a_full(),
-                         df_b_full(),
-                         join_function(),
-                         key_columns_a = key_a(),
-                         key_columns_b = key_b()
-                         )
+        DT::datatable(head(joined_df(),
+                       rownames = FALSE,
+             # remove visual clutter
+             options = list(dom = 't'))
+
             )
         })
+    
+    
+    
+
+# table a summaries ---------------------------------------------------------
+
+output$dimensions_a <- renderPrint({paste("Dimensions =",
+                                      paste(dim(df_a_full()), collapse = ' x '))
+  })
+
+output$colnames_a <- renderPrint({paste("Column names =",
+                                        paste(names(df_a_full()),
+                                              collapse = ', '))
+  })
+
+
+# table b summaries  ------------------------------------------------------
+
+output$dimensions_b <- renderPrint({paste("Dimensions =",
+                                          paste(dim(df_b_full()), collapse = ' x '))
+})
+
+output$colnames_b <- renderPrint({paste("Column names =",
+                                        paste(names(df_b_full()),
+                                              collapse = ', '))
+})
+  
+
+# output table summaries  -------------------------------------------------
+
+output$dimensions_output <- renderPrint({paste("Dimensions =",
+                                          paste(dim(joined_df()), collapse = ' x '))
+})
+
+output$colnames_output <- renderPrint({paste("Column names =",
+                                        paste(names(joined_df()),
+                                              collapse = ', '))
+})
+    
 
 } # End of server
         

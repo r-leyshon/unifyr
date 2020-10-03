@@ -6,6 +6,12 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## Changelog
 
+### Version 1.3
+
+* Separate app.R to ui.R & server.R. Dependencies sourced from run.R
+* App converted to sidebar layout with tabsets in main panel
+* Heads of DFs now rendered within renderDT calls
+
 ### Version 1.2
 
 * Include dimensions of each df as an output
@@ -41,4 +47,3 @@ Unifyr is an educational application, helping learners to develop an intuition f
   * improve appearance of DT output
   * shinyhelper guidance
   * shinyhelper gif animations
-* Separate app.R to ui.R & server.R

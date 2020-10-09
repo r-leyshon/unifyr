@@ -8,6 +8,7 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ### Version 1.4
 
+* dataframes moved to separate environment df_env
 * available_data adjusted to ignore objects other than dataframes
 
 ### Version 1.3
@@ -44,9 +45,9 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## To do
 
-* Objects other than DFs are now appearing within listed_data.
 * Upload own datasets to perform joins
 * Output joined df to file
+* Include row number selectors for all head functions
 * include a run button and pause join execution until ready
 * Dynamic df titles, head of gaminder_africa etc
 * Improve UI -

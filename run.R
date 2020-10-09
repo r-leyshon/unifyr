@@ -4,18 +4,22 @@ library(dplyr, quietly = TRUE)
 library(DT, quietly = TRUE)
 library(shinythemes, quietly = TRUE)
 
+# create environment for dataframes
+df_env <- new.env()
+
 # load_cache --------------------------------------------------------------
-gapminder_full <- readRDS("cache/gapminder.rds")
-gapminder_africa <- readRDS("cache/gapminder_africa.rds")
+df_env$gapminder_full <- readRDS("cache/gapminder.rds")
+df_env$gapminder_africa <- readRDS("cache/gapminder_africa.rds")
 
 #list the data available at this point
-.available_data <- objects(sorted = TRUE, all.names = FALSE)
+available_data <- objects(name = df_env, sorted = TRUE, all.names = FALSE)
+
 
 # Create a named list of all the dataframes available
 # set names of all slots to their object names
-.listed_data <- setNames(
-  list(gapminder_africa, gapminder_full),
-  .available_data)
+listed_data <- setNames(
+  list(df_env$gapminder_africa, df_env$gapminder_full),
+  available_data)
 
 
 
@@ -23,7 +27,7 @@ gapminder_africa <- readRDS("cache/gapminder_africa.rds")
 source('func/functions.R')
 
 
-.join_list <- list(left_join =  left_join,
+join_list <- list(left_join =  left_join,
                   right_join = right_join,
                   inner_join = inner_join,
                   semi_join = semi_join,

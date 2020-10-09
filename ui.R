@@ -19,12 +19,12 @@ ui <- fluidPage(theme = shinytheme("readable"),
                                         
                                         selectInput("df_a",
                                                     "Select First Dataset:",
-                                                    .available_data,
+                                                    available_data,
                                                     selected = "gapminder_africa"),
                                         
                                         selectInput("df_b",
                                                     "Select Second Dataset:",
-                                                    .available_data,
+                                                    available_data,
                                                     selected = "gapminder_full")
                                ),
                                tags$hr(),
@@ -99,23 +99,23 @@ ui <- fluidPage(theme = shinytheme("readable"),
                                                           verbatimTextOutput('dimensions_output'),
                                                           verbatimTextOutput('colnames_output'))
                                                  
-                                        )#, #end of tabpanel 2
+                                        ), #end of tabpanel 2
                                         
-                                        # tabPanel("Bring your own data",
-                                        #          
-                                        #          tags$p('Upload one or more files.'),
-                                        #          # input for file upload
-                                        #          fileInput("userfile", NULL, accept = c(".csv", ".tsv", ".rds")),
-                                        #          tags$p('Once uploaded, visit the first tab to specify your data & join parameters.'),
-                                        #          # input to deterrmine number of rows to render
-                                        #          numericInput("n", "Rows", value = 5, min = 1, step = 1),
-                                        #          # view the head with the assigned no. of rows
-                                        #          tableOutput("head")
-                                        #          
-                                        #          
-                                        #          
-                                        #          
-                                        #          )
+                                        tabPanel("Bring your own data",
+
+                                                 tags$p('Upload one or more files.'),
+                                                 # input for file upload
+                                                 fileInput("userfile", NULL, accept = c(".csv", ".tsv", ".rds")),
+                                                 tags$p('Once uploaded, visit the first tab to specify your data & join parameters.'),
+                                                 # input to deterrmine number of rows to render
+                                                 numericInput("n", "Rows", value = 5, min = 1, step = 1),
+                                                 # view the head with the assigned no. of rows
+                                                 tableOutput("head")
+
+
+
+
+                                                 )
                                         
                             ) # end of tabset panel
                             

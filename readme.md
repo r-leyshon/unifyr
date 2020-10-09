@@ -1,10 +1,14 @@
-# Unifyr v1.2
+# Unifyr
 
 ## Introduction
 
 Unifyr is an educational application, helping learners to develop an intuition for the different types of join available within Dplyr. The app is built with Shiny and is currently hosted on [shinyapps.io](https://richleysh84.shinyapps.io/UnifyR/).
 
 ## Changelog
+
+### Version 1.4
+
+* available_data adjusted to ignore objects other than dataframes
 
 ### Version 1.3
 
@@ -40,9 +44,11 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## To do
 
+* Objects other than DFs are now appearing within listed_data.
 * Upload own datasets to perform joins
 * Output joined df to file
 * include a run button and pause join execution until ready
+* Dynamic df titles, head of gaminder_africa etc
 * Improve UI -
   * improve appearance of DT output
   * shinyhelper guidance

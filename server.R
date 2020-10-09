@@ -10,7 +10,7 @@ server <- function(input, output, session) {
   
   #generate df for selection 1  
   df_a_full <- reactive({
-    a <- data.frame(listed_data[[input$df_a]])
+    a <- data.frame(.listed_data[[input$df_a]])
     return(a)
   })
   
@@ -18,7 +18,7 @@ server <- function(input, output, session) {
   
   #generate df for selection 2
   df_b_full <- reactive({
-    b <- data.frame(listed_data[[input$df_b]])
+    b <- data.frame(.listed_data[[input$df_b]])
     return(b)
   })
   
@@ -26,7 +26,7 @@ server <- function(input, output, session) {
   
   join_function <- reactive({
     
-    joining_with <- join_list[[input$join_type]]
+    joining_with <- .join_list[[input$join_type]]
     return(joining_with)
   })
   
@@ -63,7 +63,7 @@ server <- function(input, output, session) {
   # join the data -----------------------------------------------------------
   
   joined_df <- reactive({
-    execute_join(df_a_full(),
+    .execute_join(df_a_full(),
                  df_b_full(),
                  join_function(),
                  key_columns_a = key_a(),
@@ -126,11 +126,28 @@ server <- function(input, output, session) {
   })
   
   
+
+# user_data ---------------------------------------------------------------
+# # respond to user uploaded data
+#   userdata <- reactive({
+#     # only run if the uer has upladed data
+#     req(input$userfile)
+#     # detect the file extension
+#     ext <- tools::file_ext(input$userfile$name)
+#     # depending on file extension, implement the following
+#     switch(ext,
+#            csv = vroom::vroom(input$userfile$datapath, delim = ","),
+#            tsv = vroom::vroom(input$userfile$datapath, delim = "\t"),
+#            rds = readRDS(input$userfile$datapath),
+#            # if error, display the following message
+#            validate("Invalid file; Please upload a .csv or .tsv file")
+#     )
+#   })
+#   # allow uer to view head and decide on number of rows to view
+#   output$head <- renderTable({
+#     head(userdata(), input$n)
+#   })
+  
+  
 } # End of server
 
-
-
-
-
-# Run the application 
-#shinyApp(ui = ui, server = server)

@@ -34,12 +34,16 @@ server <- function(input, output, session) {
   # render previews ---------------------------------------------------------
 
   # render the heads for display
-  output$table_a_head <- renderDT(head(df_a_full()),
-    selection = list(target = "column")
+  output$table_a_head <- renderDT(head(df_a_full(), input$n1),
+    selection = list(target = "column"),
+    # remove visual clutter
+    options = list(dom = "t")
   )
 
-  output$table_b_head <- renderDT(head(df_b_full()),
-    selection = list(target = "column")
+  output$table_b_head <- renderDT(head(df_b_full(), input$n2),
+    selection = list(target = "column"),
+    # remove visual clutter
+    options = list(dom = "t")
   )
 
 
@@ -80,11 +84,11 @@ server <- function(input, output, session) {
 
   # render the joined df head
   output$table_out <- renderDT({
-    DT::datatable(head(joined_df(),
+    DT::datatable(head(joined_df(), input$n3),
       rownames = FALSE,
       # remove visual clutter
       options = list(dom = "t")
-    ))
+    )
   })
 
 

@@ -8,6 +8,12 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ### Version 1.4
 
+**Frontend**
+* Removal of visual clutter around datatables
+* Input dataframes have rownames = TRUE as FALSE causes key selection issue when executing join
+* Include row number selectors for all head functions
+* Include gapminder_zimbabwe df for selection
+
 **Backend**
 * lintr styling applied to code
 * dataframes moved to separate environment df_env
@@ -52,11 +58,9 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 * nest_join is not compatible with the join function used
 * selecting uneven column names causes an error in rendered table output
-* Removal of visual clutter around DT::datatable not working
 
 ## To do
 
-* Include row number selectors for all head functions
 * Upload own datasets to perform joins
 * Output joined df to file
 * include a run button and pause join execution until ready

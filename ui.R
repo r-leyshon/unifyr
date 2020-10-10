@@ -87,6 +87,8 @@ ui <- fluidPage(
           tags$p("Please scroll down for more..."),
           # LHS
           fluidRow(
+            # input to determine number of rows to render
+            numericInput("n1", "Number of rows to display", value = 5, min = 1, step = 1),
             h3("Head of data 1"), DTOutput(outputId = "table_a_head"),
             verbatimTextOutput("dimensions_a"),
             verbatimTextOutput("colnames_a")
@@ -95,6 +97,8 @@ ui <- fluidPage(
           tags$hr(), # horizontal rule
           # RHS
           fluidRow(
+            # input to determine number of rows to render
+            numericInput("n2", "Number of rows to display", value = 5, min = 1, step = 1),
             h3("Head of data 2"), DTOutput("table_b_head"),
             verbatimTextOutput("dimensions_b"),
             verbatimTextOutput("colnames_b")
@@ -110,6 +114,9 @@ ui <- fluidPage(
 
 
           fluidRow(
+            
+            # input to determine number of rows to render
+            numericInput("n3", "Number of rows to display", value = 5, min = 1, step = 1),
             h3("Head of output data"), DTOutput("table_out"),
             verbatimTextOutput("dimensions_output"),
             verbatimTextOutput("colnames_output")

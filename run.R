@@ -11,7 +11,7 @@ df_env <- new.env()
 df_env$gapminder_full <- readRDS("cache/gapminder.rds")
 df_env$gapminder_africa <- readRDS("cache/gapminder_africa.rds")
 
-#list the data available at this point
+# list the data available at this point
 available_data <- objects(name = df_env, sorted = TRUE, all.names = FALSE)
 
 
@@ -19,17 +19,20 @@ available_data <- objects(name = df_env, sorted = TRUE, all.names = FALSE)
 # set names of all slots to their object names
 listed_data <- setNames(
   list(df_env$gapminder_africa, df_env$gapminder_full),
-  available_data)
+  available_data
+)
 
 
 
 # source functions
-source('func/functions.R')
+source("func/functions.R")
 
 
-join_list <- list(left_join =  left_join,
-                  right_join = right_join,
-                  inner_join = inner_join,
-                  semi_join = semi_join,
-                  full_join = full_join,
-                  anti_join = anti_join)
+join_list <- list(
+  left_join = left_join,
+  right_join = right_join,
+  inner_join = inner_join,
+  semi_join = semi_join,
+  full_join = full_join,
+  anti_join = anti_join
+)

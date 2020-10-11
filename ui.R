@@ -8,6 +8,17 @@ source("run.R")
 # Define UI for application that draws a histogram
 ui <- fluidPage(
   theme = shinytheme("readable"),
+  # insert html head with link to source code
+  HTML(
+  "<!DOCTYPE html>
+    <html>
+      <head>
+        <title>Unifyr</title>
+        <a href='https://github.com/r-leyshon/unifyr' target='_blank' style='float:right'>View code on GitHub</a>
+      </head>
+    </html>
+    "
+  ),
 
   # Application title
   titlePanel("unifyR v1.4"),
@@ -121,8 +132,7 @@ ui <- fluidPage(
             verbatimTextOutput("dimensions_output"),
             verbatimTextOutput("colnames_output")
           )
-        ) #end of tabpanel 2
-
+        )#end of tabpanel 2
 
       ) # end of tabset panel
     ) # end of mainPanel

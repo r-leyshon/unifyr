@@ -9,6 +9,7 @@ Unifyr is an educational application, helping learners to develop an intuition f
 ### Version 1.4
 
 **Frontend**
+* Include link to source data in html header
 * Removal of visual clutter around datatables
 * Input dataframes have rownames = TRUE as FALSE causes key selection issue when executing join
 * Include row number selectors for all head functions
@@ -61,11 +62,13 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## To do
 
-* Upload own datasets to perform joins
-* Output joined df to file
-* include a run button and pause join execution until ready
-* Dynamic df titles, head of gaminder_africa etc
 * Improve UI -
   * improve appearance of DT output
   * shinyhelper guidance
   * shinyhelper gif animations
+* Dynamic df titles, head of gaminder_africa etc
+* Include 'joined on' verbatim text output underneath output df head
+* Upload own datasets to perform joins
+* Output joined df to file
+* include a run button and pause join execution until ready
+

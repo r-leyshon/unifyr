@@ -13,7 +13,7 @@ ui <- fluidPage(
   "<!DOCTYPE html>
     <html>
       <head>
-        <title>Unifyr</title>
+        <title>unifyR</title>
         <a href='https://github.com/r-leyshon/unifyr' target='_blank' style='float:right'>View code on GitHub</a>
       </head>
     </html>
@@ -21,7 +21,7 @@ ui <- fluidPage(
   ),
 
   # Application title
-  titlePanel("unifyR v1.4"),
+  titlePanel("unifyR v1.5"),
   sidebarLayout(
     sidebarPanel(
       width = 4,
@@ -29,18 +29,27 @@ ui <- fluidPage(
         tags$h3("Step 1. Select datasets to join."),
 
 # 1. dataframe selectors -----------------------------------------------------
-
+# shinyhelper lhs
+helper(
         selectInput("df_a",
           "Select First Dataset:",
           available_data,
           selected = "gapminder_africa"
         ),
+        type = "markdown",
+        content = "lhs"
+        ),
 
+# shinyhelper rhs
+helper(
         selectInput("df_b",
           "Select Second Dataset:",
           available_data,
           selected = "gapminder_full"
-        )
+        ),
+        type = "markdown",
+        content = "rhs"
+)
       ),
       tags$hr(),
 
@@ -49,9 +58,8 @@ ui <- fluidPage(
       # specify join
 
       fluidRow(
-        tags$h3("Step 2. Select a join type to execute."),
-
-
+        # ui changes dependent on user selected join 
+        htmlOutput("dynamic_helper"),
         selectInput("join_type",
           "Select the type of join to perform:",
           c(
@@ -71,16 +79,22 @@ ui <- fluidPage(
         "Choose the columns by clicking on the tables in the panel to the right"
         ),
 
+# shinyhelper keys
+helper(
       # display selected key column names
       fluidRow(
         # LHS
         h5("L.H.S. selected column(s)"),
+
         verbatimTextOutput("table_a_userselected"),
 
         # RHS
         h5("R.H.S. selected column(s)"),
         verbatimTextOutput("table_b_userselected")
-      )
+      ),
+      type = "markdown",
+      content = "keys")
+      
     ), # end of sidebarlayout
 
 
@@ -98,21 +112,57 @@ ui <- fluidPage(
           tags$p("Please scroll down for more..."),
           # LHS
           fluidRow(
+            # add column to control total width
+            column(width = 4,
+            # shinyhelper nrow
+            helper(
             # input to determine number of rows to render
             numericInput("n1", "Number of rows to display", value = 5, min = 1, step = 1),
+            type = "markdown",
+            content = "nrow")
+            ),
+            
+            column(width = 12,
             h3("Head of data 1"), DTOutput(outputId = "table_a_head"),
+            #shinyhelper dimensions
+            helper(
             verbatimTextOutput("dimensions_a"),
-            verbatimTextOutput("colnames_a")
+            type = "markdown",
+            content = "dimensions"),
+            # shinyhelper colnames
+            helper(
+            verbatimTextOutput("colnames_a"),
+            type = "markdown",
+            content = "colnames")
+          )
           ),
 
           tags$hr(), # horizontal rule
           # RHS
           fluidRow(
+            # add column to control total width
+            column(width = 4,
+                   # shinyhelper nrow
+                   helper(
             # input to determine number of rows to render
             numericInput("n2", "Number of rows to display", value = 5, min = 1, step = 1),
+            type = "markdown",
+            content = "nrow")),
+            
+            
+            column(width = 12,
             h3("Head of data 2"), DTOutput("table_b_head"),
+            #shinyhelper dimensions
+            helper(
             verbatimTextOutput("dimensions_b"),
-            verbatimTextOutput("colnames_b")
+            type = "markdown",
+            content = "dimensions"),
+            # shinyhelper colnames
+            helper(
+            verbatimTextOutput("colnames_b"),
+            type = "markdown",
+            content = "colnames")
+          )
           )
         ), # end of tabpanel 1
 
@@ -125,12 +175,37 @@ ui <- fluidPage(
 
 
           fluidRow(
-            
+            column(width = 4,
+                   # shinyhelper nrow
+                   helper(
             # input to determine number of rows to render
             numericInput("n3", "Number of rows to display", value = 5, min = 1, step = 1),
-            h3("Head of output data"), DTOutput("table_out"),
+            type = "markdown",
+            content = "nrow")
+            ),
+            
+            column(width = 12,
+                   #shinyhelper output_df
+                   column(width = 5,
+                   helper(
+            h3("Head of output data"),
+            type = "markdown",
+            content = "output_df")
+            ),
+            column(width = 12,
+            DTOutput("table_out"),
+            #shinyhelper dimensions
+            helper(
             verbatimTextOutput("dimensions_output"),
-            verbatimTextOutput("colnames_output")
+            type = "markdown",
+            content = "dimensions"),
+            # shinyhelper colnames
+            helper(
+            verbatimTextOutput("colnames_output"),
+            type = "markdown",
+            content = "colnames")
+            )
+          )
           )
         )#end of tabpanel 2
 

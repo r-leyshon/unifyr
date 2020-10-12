@@ -31,6 +31,25 @@ server <- function(input, output, session) {
 
 
 
+# dynamic shinyhelper for join --------------------------------------------
+
+  
+# observe changes made by user selection
+  observeEvent(
+    # look for changes within the specified input
+    input$join_type, {
+      output$dynamic_helper <- renderUI({
+        helper(
+        tags$h3("Step 2. Select a join type to execute."),
+        type = "markdown",
+        size = "l",
+        content = input$join_type)
+        
+})# end of render UI
+      })# end of observe event
+  
+  
+
   # render previews ---------------------------------------------------------
 
   # render the heads for display
@@ -156,5 +175,10 @@ server <- function(input, output, session) {
     )
   })
 
+
+# shinyhelper -------------------------------------------------------------
+
+# provide UI modals with route to shinyhelper directory
+observe_helpers(help_dir = "shinyhelper_dir")
 
 } # End of server

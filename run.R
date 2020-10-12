@@ -3,6 +3,7 @@ library(shiny, quietly = TRUE)
 library(dplyr, quietly = TRUE)
 library(DT, quietly = TRUE)
 library(shinythemes, quietly = TRUE)
+library(shinyhelper, quietly = TRUE)
 
 # create environment for dataframes
 df_env <- new.env()

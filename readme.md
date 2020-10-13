@@ -12,6 +12,8 @@ Unifyr is an educational application, helping learners to develop an intuition f
 * shinyhelper guidance buttons included
 * conditional join guidance dependent on selected join type
 * shinyhelper gif animations
+* Record gif of key column selection of keys and include in helper
+* Dynamic datatable titles dependent on user selections
 
 **Backend**
 * Shinyhelper markdown help directory created
@@ -73,9 +75,6 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## To do
 
-* gganimate to record gif of column selection of keys and include in helper
-* Dynamic df titles, head of gaminder_africa etc
-* Include 'joined on' verbatim text output underneath output df head
 * Upload own datasets to perform joins
 * Output joined df to file
 * include a run button and pause join execution until ready

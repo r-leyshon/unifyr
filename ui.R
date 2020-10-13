@@ -26,13 +26,13 @@ ui <- fluidPage(
     sidebarPanel(
       width = 4,
       fluidRow(
-        tags$h3("Step 1. Select datasets to join."),
+        tags$h3("Step 1. Select data to join."),
 
 # 1. dataframe selectors -----------------------------------------------------
 # shinyhelper lhs
 helper(
         selectInput("df_a",
-          "Select First Dataset:",
+          "Select Data 1:",
           available_data,
           selected = "gapminder_africa"
         ),
@@ -43,7 +43,7 @@ helper(
 # shinyhelper rhs
 helper(
         selectInput("df_b",
-          "Select Second Dataset:",
+          "Select Data 2:",
           available_data,
           selected = "gapminder_full"
         ),
@@ -84,16 +84,17 @@ helper(
       # display selected key column names
       fluidRow(
         # LHS
-        h5("L.H.S. selected column(s)"),
+        h5("Data 1 selected column(s)"),
 
         verbatimTextOutput("table_a_userselected"),
 
         # RHS
-        h5("R.H.S. selected column(s)"),
+        h5("Data 2 selected column(s)"),
         verbatimTextOutput("table_b_userselected")
       ),
       type = "markdown",
-      content = "keys")
+      content = "keys",
+      size = "l")
       
     ), # end of sidebarlayout
 
@@ -123,7 +124,9 @@ helper(
             ),
             
             column(width = 12,
-            h3("Head of data 1"), DTOutput(outputId = "table_a_head"),
+                   # dynamic title 
+            tags$h3(textOutput("df_a_title")),
+            DTOutput(outputId = "table_a_head"),
             #shinyhelper dimensions
             helper(
             verbatimTextOutput("dimensions_a"),
@@ -151,7 +154,10 @@ helper(
             
             
             column(width = 12,
-            h3("Head of data 2"), DTOutput("table_b_head"),
+            # dynamic title 
+            tags$h3(textOutput("df_b_title")),
+            h3("Head of Data 2"),
+            DTOutput("table_b_head"),
             #shinyhelper dimensions
             helper(
             verbatimTextOutput("dimensions_b"),
@@ -186,9 +192,10 @@ helper(
             
             column(width = 12,
                    #shinyhelper output_df
-                   column(width = 5,
+                   column(width = 12,
                    helper(
-            h3("Head of output data"),
+                  # dynamic title 
+                  tags$h3(textOutput("joined_title")),
             type = "markdown",
             content = "output_df")
             ),

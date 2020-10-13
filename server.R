@@ -5,9 +5,11 @@ source("run.R")
 
 # Define server logic
 server <- function(input, output, session) {
+  
 
   # df_a --------------------------------------------------------------------
-
+# generate df_a ame for use in dynmic title
+  output$df_a_title <- renderText({paste("Head of Data 1:", input$df_a)})
   # generate df for selection 1
   df_a_full <- reactive({
     a <- data.frame(listed_data[[input$df_a]])
@@ -15,7 +17,8 @@ server <- function(input, output, session) {
   })
 
   # df_b --------------------------------------------------------------------
-
+  # generate df_a ame for use in dynmic title
+  output$df_b_title <- renderText({paste("Head of Data 2:", input$df_b)})
   # generate df for selection 2
   df_b_full <- reactive({
     b <- data.frame(listed_data[[input$df_b]])
@@ -101,6 +104,12 @@ server <- function(input, output, session) {
 
   # render the joined df ----------------------------------------------------
 
+  # generate output df name for use in dynamic title
+  output$joined_title <- renderText({paste("Head of Output Data:",
+                                           input$df_a,
+                                           paste0(input$join_type, "ed to "),
+                                           input$df_b)})
+  
   # render the joined df head
   output$table_out <- renderDT({
     DT::datatable(head(joined_df(), input$n3),

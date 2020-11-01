@@ -6,6 +6,10 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## Changelog
 
+### Version 1.6
+**Frontend**
+* CSS styling applied.
+
 ### Version 1.5
 
 **Frontend**
@@ -34,6 +38,7 @@ Unifyr is an educational application, helping learners to develop an intuition f
 * available_data adjusted to ignore objects other than dataframes
 
 ### Version 1.3
+
 
 **Frontend**
 * App converted to sidebar layout with tabsets in main panel
@@ -75,7 +80,9 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## To do
 
+* Incorporate accessibility suggestions on [WAVE](https://wave.webaim.org/)
 * Upload own datasets to perform joins
 * Output joined df to file
 * include a run button and pause join execution until ready
+
 

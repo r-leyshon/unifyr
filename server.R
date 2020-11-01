@@ -46,6 +46,7 @@ server <- function(input, output, session) {
         tags$h3("Step 2. Select a join type to execute."),
         type = "markdown",
         size = "l",
+        colour = "#ce3487",
         content = input$join_type)
         
 })# end of render UI
@@ -103,6 +104,7 @@ server <- function(input, output, session) {
   })
 
   # render the joined df ----------------------------------------------------
+
 
   # generate output df name for use in dynamic title
   output$joined_title <- renderText({paste("Head of Output Data:",

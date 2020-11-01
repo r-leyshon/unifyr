@@ -7,27 +7,24 @@ source("run.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-  theme = shinytheme("readable"),
-  # insert html head with link to source code
-  HTML(
-  "<!DOCTYPE html>
-    <html>
-      <head>
-        <title>unifyR</title>
-        <a href='https://github.com/r-leyshon/unifyr' target='_blank' style='float:right'>View code on GitHub</a>
-      </head>
-    </html>
-    "
-  ),
+  # Use theme to style with custom css
+  theme = "style.css",
 
-  # Application title
-  titlePanel("unifyR v1.5"),
+# Application header with app title and source code link
+  tags$header(class = "banner", tags$h1(tags$strong("unifyR v1.6"),
+                                        id = "appname"),
+              tags$a(href = "https://github.com/r-leyshon/unifyr",
+                     target='_blank',
+                     style='float:right',
+                     tags$strong("View code on GitHub"),
+                     id = "sourcecode",
+                     class = "source")),
   sidebarLayout(
-    sidebarPanel(
+    # div to apply css styling to sidebar
+    sidebarPanel(class = "myclass1",
       width = 4,
       fluidRow(
         tags$h3("Step 1. Select data to join."),
-
 # 1. dataframe selectors -----------------------------------------------------
 # shinyhelper lhs
 helper(
@@ -37,7 +34,8 @@ helper(
           selected = "gapminder_africa"
         ),
         type = "markdown",
-        content = "lhs"
+        content = "lhs",
+        colour = "#ce3487"
         ),
 
 # shinyhelper rhs
@@ -48,10 +46,12 @@ helper(
           selected = "gapminder_full"
         ),
         type = "markdown",
-        content = "rhs"
+        content = "rhs",
+        colour = "#ce3487"
 )
       ),
       tags$hr(),
+
 
 # 2. select a join type ------------------------------------------------------
 
@@ -74,7 +74,8 @@ helper(
 
     # 3. select columns to join by --------------------------------------------
 
-      tags$h3("Step 3 (optional). Select columns to join by."),
+
+      tags$h3("Step 3 (optional). Select Key Columns.", id = "optional"),
       tags$h5(
         "Choose the columns by clicking on the tables in the panel to the right"
         ),
@@ -94,9 +95,11 @@ helper(
       ),
       type = "markdown",
       content = "keys",
-      size = "l")
+      size = "l",
+      colour = "#ce3487")
+
       
-    ), # end of sidebarlayout
+    ),# end of sidebarlayout
 
 
     mainPanel(
@@ -120,7 +123,8 @@ helper(
             # input to determine number of rows to render
             numericInput("n1", "Number of rows to display", value = 5, min = 1, step = 1),
             type = "markdown",
-            content = "nrow")
+            content = "nrow",
+            colour = "#ce3487")
             ),
             
             column(width = 12,
@@ -131,12 +135,14 @@ helper(
             helper(
             verbatimTextOutput("dimensions_a"),
             type = "markdown",
-            content = "dimensions"),
+            content = "dimensions",
+            colour = "#ce3487"),
             # shinyhelper colnames
             helper(
             verbatimTextOutput("colnames_a"),
             type = "markdown",
-            content = "colnames")
+            content = "colnames",
+            colour = "#ce3487")
           )
           ),
 
@@ -150,24 +156,26 @@ helper(
             # input to determine number of rows to render
             numericInput("n2", "Number of rows to display", value = 5, min = 1, step = 1),
             type = "markdown",
-            content = "nrow")),
+            content = "nrow",
+            colour = "#ce3487")),
             
             
             column(width = 12,
             # dynamic title 
             tags$h3(textOutput("df_b_title")),
-            h3("Head of Data 2"),
             DTOutput("table_b_head"),
             #shinyhelper dimensions
             helper(
             verbatimTextOutput("dimensions_b"),
             type = "markdown",
-            content = "dimensions"),
+            content = "dimensions",
+            colour = "#ce3487"),
             # shinyhelper colnames
             helper(
             verbatimTextOutput("colnames_b"),
             type = "markdown",
-            content = "colnames")
+            content = "colnames",
+            colour = "#ce3487")
           )
           )
         ), # end of tabpanel 1
@@ -187,7 +195,8 @@ helper(
             # input to determine number of rows to render
             numericInput("n3", "Number of rows to display", value = 5, min = 1, step = 1),
             type = "markdown",
-            content = "nrow")
+            content = "nrow",
+            colour = "#ce3487")
             ),
             
             column(width = 12,
@@ -197,7 +206,8 @@ helper(
                   # dynamic title 
                   tags$h3(textOutput("joined_title")),
             type = "markdown",
-            content = "output_df")
+            content = "output_df",
+            colour = "#ce3487")
             ),
             column(width = 12,
             DTOutput("table_out"),
@@ -205,12 +215,14 @@ helper(
             helper(
             verbatimTextOutput("dimensions_output"),
             type = "markdown",
-            content = "dimensions"),
+            content = "dimensions",
+            colour = "#ce3487"),
             # shinyhelper colnames
             helper(
             verbatimTextOutput("colnames_output"),
             type = "markdown",
-            content = "colnames")
+            content = "colnames",
+            colour = "#ce3487")
             )
           )
           )

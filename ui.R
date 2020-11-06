@@ -21,7 +21,7 @@ ui <- fluidPage(
                      class = "source")),
   sidebarLayout(
     # div to apply css styling to sidebar
-    sidebarPanel(class = "myclass1",
+    sidebarPanel(class = "sidebar",
       width = 4,
       fluidRow(
         tags$h3("Step 1. Select data to join."),

@@ -9,6 +9,7 @@ Unifyr is an educational application, helping learners to develop an intuition f
 ### Version 1.6
 **Frontend**
 * CSS styling applied.
+* Added word-break rule to prevent h3 spillover on small screens
 
 ### Version 1.5
 

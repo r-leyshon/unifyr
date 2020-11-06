@@ -9,16 +9,21 @@ source("run.R")
 ui <- fluidPage(
   # Use theme to style with custom css
   theme = "style.css",
+  # set content language for screen reader accessibility
+  tags$head(HTML("<html lang='en'>")),
+  # set page title for accessibility
+  titlePanel(title = tags$header(
+    class = "banner", tags$h1(
+      # app name 
+      tags$strong("unifyR v1.6"), id = "appname"),
+    # github link
+    tags$a(href = "https://github.com/r-leyshon/unifyr",
+           target='_blank',
+           style='float:right',
+           tags$strong("View code on GitHub"),
+           id = "sourcecode",
+           class = "source")), windowTitle = "Explore data joins in Unifyr"),
 
-# Application header with app title and source code link
-  tags$header(class = "banner", tags$h1(tags$strong("unifyR v1.6"),
-                                        id = "appname"),
-              tags$a(href = "https://github.com/r-leyshon/unifyr",
-                     target='_blank',
-                     style='float:right',
-                     tags$strong("View code on GitHub"),
-                     id = "sourcecode",
-                     class = "source")),
   sidebarLayout(
     # div to apply css styling to sidebar
     sidebarPanel(class = "sidebar",
@@ -28,8 +33,8 @@ ui <- fluidPage(
 # 1. dataframe selectors -----------------------------------------------------
 # shinyhelper lhs
 helper(
-        selectInput("df_a",
-          "Select Data 1:",
+        selectInput(inputId = "df_a",
+          label = "Select Data 1:",
           available_data,
           selected = "gapminder_africa"
         ),
@@ -40,8 +45,8 @@ helper(
 
 # shinyhelper rhs
 helper(
-        selectInput("df_b",
-          "Select Data 2:",
+        selectInput(inputId = "df_b",
+          label = "Select Data 2:",
           available_data,
           selected = "gapminder_full"
         ),
@@ -60,8 +65,8 @@ helper(
       fluidRow(
         # ui changes dependent on user selected join 
         htmlOutput("dynamic_helper"),
-        selectInput("join_type",
-          "Select the type of join to perform:",
+        selectInput(inputId = "join_type",
+          label = "Select the type of join to perform:",
           c(
             "left_join", "right_join", "inner_join",
             "semi_join", "full_join", "anti_join"

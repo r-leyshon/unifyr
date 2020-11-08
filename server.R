@@ -7,6 +7,16 @@ source("run.R")
 server <- function(input, output, session) {
   
 
+# application guide -------------------------------------------------------
+
+  guide$
+    init()
+
+  
+  observeEvent(input$guide, {
+    guide$start()
+  })
+
   # df_a --------------------------------------------------------------------
 # generate df_a ame for use in dynmic title
   output$df_a_title <- renderText({paste("Head of Data 1:", input$df_a)})

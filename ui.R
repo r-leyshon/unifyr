@@ -9,6 +9,8 @@ source("run.R")
 ui <- fluidPage(
   # Use theme to style with custom css
   theme = "style.css",
+  # include the cicerone guide & dependencies
+  use_cicerone(),
   # set content language for screen reader accessibility
   tags$head(HTML("<html lang='en'>")),
   # set page title for accessibility
@@ -24,11 +26,16 @@ ui <- fluidPage(
            id = "sourcecode",
            class = "source")), windowTitle = "Explore data joins in Unifyr"),
 
+
+  
   sidebarLayout(
+# sidebar -----------------------------------------------------------------
+    
     # div to apply css styling to sidebar
     sidebarPanel(class = "sidebar",
       width = 4,
-      fluidRow(
+      actionButton(inputId = "guide", label = "Take a tour"),
+      fluidRow(id = "step1",
         tags$h3("Step 1. Select data to join."),
 # 1. dataframe selectors -----------------------------------------------------
 # shinyhelper lhs
@@ -62,7 +69,7 @@ helper(
 
       # specify join
 
-      fluidRow(
+      fluidRow(id = "step2",
         # ui changes dependent on user selected join 
         htmlOutput("dynamic_helper"),
         selectInput(inputId = "join_type",
@@ -109,7 +116,7 @@ helper(
 
     mainPanel(
       width = 8,
-      tabsetPanel(
+      tabsetPanel(id = "tabz",
         type = "tabs",
 
 
@@ -123,19 +130,24 @@ helper(
           fluidRow(
             # add column to control total width
             column(width = 4,
+                   div(id = "nrow1",
             # shinyhelper nrow
             helper(
             # input to determine number of rows to render
-            numericInput("n1", "Number of rows to display", value = 5, min = 1, step = 1),
+            numericInput(inputId = "n1",
+                         label = "Number of rows to display",
+                         value = 5, min = 1, step = 1),
             type = "markdown",
             content = "nrow",
             colour = "#ce3487")
-            ),
+            )),
             
             column(width = 12,
+                   div(id = "lhs",
                    # dynamic title 
             tags$h3(textOutput("df_a_title")),
-            DTOutput(outputId = "table_a_head"),
+            DTOutput(outputId = "table_a_head")),
+            div(id = "deets_lhs",
             #shinyhelper dimensions
             helper(
             verbatimTextOutput("dimensions_a"),
@@ -147,8 +159,8 @@ helper(
             verbatimTextOutput("colnames_a"),
             type = "markdown",
             content = "colnames",
-            colour = "#ce3487")
-          )
+            colour = "#ce3487"))
+            )
           ),
 
           tags$hr(), # horizontal rule
@@ -166,9 +178,11 @@ helper(
             
             
             column(width = 12,
+                   div(id = "rhs",
             # dynamic title 
             tags$h3(textOutput("df_b_title")),
-            DTOutput("table_b_head"),
+            DTOutput("table_b_head")),
+            div(id = "deets_rhs",
             #shinyhelper dimensions
             helper(
             verbatimTextOutput("dimensions_b"),
@@ -180,7 +194,7 @@ helper(
             verbatimTextOutput("colnames_b"),
             type = "markdown",
             content = "colnames",
-            colour = "#ce3487")
+            colour = "#ce3487"))
           )
           )
         ), # end of tabpanel 1
@@ -207,15 +221,18 @@ helper(
             column(width = 12,
                    #shinyhelper output_df
                    column(width = 12,
+                          div(id = "output_preview",
                    helper(
                   # dynamic title 
+
                   tags$h3(textOutput("joined_title")),
             type = "markdown",
             content = "output_df",
-            colour = "#ce3487")
-            ),
+            colour = "#ce3487"),
+            
             column(width = 12,
-            DTOutput("table_out"),
+            DTOutput("table_out"))
+            ),
             #shinyhelper dimensions
             helper(
             verbatimTextOutput("dimensions_output"),

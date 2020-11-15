@@ -1,8 +1,8 @@
 # hold dependencies for ui.R & server.R
+
 library(shiny, quietly = TRUE)
 library(dplyr, quietly = TRUE)
 library(DT, quietly = TRUE)
-library(shinythemes, quietly = TRUE)
 library(shinyhelper, quietly = TRUE)
 library(cicerone)
 

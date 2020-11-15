@@ -11,6 +11,7 @@ Unifyr is an educational application, helping learners to develop an intuition f
 * CSS styling applied.
 * Added word-break rule to prevent h3 spillover on small screens
 * Added guide button & application guide steps
+* renv package management applied
 
 ### Version 1.5
 

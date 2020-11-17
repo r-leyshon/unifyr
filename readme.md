@@ -12,6 +12,7 @@ Unifyr is an educational application, helping learners to develop an intuition f
 * Added word-break rule to prevent h3 spillover on small screens
 * Added guide button & application guide steps
 * renv package management applied
+* Incorporate accessibility suggestions on [WAVE](https://wave.webaim.org/)
 
 ### Version 1.5
 
@@ -87,9 +88,9 @@ Unifyr is an educational application, helping learners to develop an intuition f
 data of interest needs to be available on either side of the join. Currently,
 the LHS contains nothing of utility relative to the RHS.
 * Include a 'why join data' helper to help reinforce the need for data joins.
-* Incorporate accessibility suggestions on [WAVE](https://wave.webaim.org/)
 * Upload own datasets to perform joins
-* Output joined df to file
 * include a run button and pause join execution until ready
+* ~~Output joined df to file~~ May encourage non-reproducible workflow
+
 
 

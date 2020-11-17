@@ -83,6 +83,10 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## To do
 
+* Update data structure to reinforce the notion of why joins are required: some 
+data of interest needs to be available on either side of the join. Currently,
+the LHS contains nothing of utility relative to the RHS.
+* Include a 'why join data' helper to help reinforce the need for data joins.
 * Incorporate accessibility suggestions on [WAVE](https://wave.webaim.org/)
 * Upload own datasets to perform joins
 * Output joined df to file

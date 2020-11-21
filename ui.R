@@ -108,7 +108,12 @@ helper(
       type = "markdown",
       content = "keys",
       size = "l",
-      colour = "#ce3487")
+      colour = "#ce3487"),
+tags$br(),
+tags$hr(),
+tags$h3("Step 4: Execute The Join!",
+        actionButton(
+          inputId = "execute", label = "Go!", icon = icon("play-circle")))
 
       
     ),# end of sidebarlayout
@@ -233,6 +238,7 @@ helper(
             column(width = 12,
             DTOutput("table_out"))
             ),
+            tags$br(),
             #shinyhelper dimensions
             helper(
             verbatimTextOutput("dimensions_output"),

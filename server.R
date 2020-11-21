@@ -15,6 +15,7 @@ server <- function(input, output, session) {
   
   observeEvent(input$guide, {
     guide$start()
+    
   })
 
   # df_a --------------------------------------------------------------------
@@ -27,7 +28,7 @@ server <- function(input, output, session) {
   })
 
   # df_b --------------------------------------------------------------------
-  # generate df_a ame for use in dynmic title
+  # generate df_a dataframe for use in dynamic title
   output$df_b_title <- renderText({paste("Head of Data 2:", input$df_b)})
   # generate df for selection 2
   df_b_full <- reactive({
@@ -104,33 +105,34 @@ server <- function(input, output, session) {
 
   # join the data -----------------------------------------------------------
 
-  joined_df <- reactive({
-    .execute_join(df_a_full(),
-      df_b_full(),
-      join_function(),
-      key_columns_a = key_a(),
-      key_columns_b = key_b()
-    )
-  })
+  joined_df <- reactive({.execute_join(df_a_full(),
+                               df_b_full(),
+                               join_function(),
+                               key_columns_a = key_a(),
+                               key_columns_b = key_b()
+                               )
+    })
 
   # render the joined df ----------------------------------------------------
 
 
   # generate output df name for use in dynamic title
-  output$joined_title <- renderText({paste("Head of Output Data:",
-                                           input$df_a,
-                                           paste0(input$join_type, "ed to "),
-                                           input$df_b)})
+output$joined_title <- renderText({paste("Head of Output Data:",
+                                         input$df_a,
+                                         paste0(input$join_type, "ed to "),
+                                         input$df_b)})
   
   # render the joined df head
-  output$table_out <- renderDT({
-    DT::datatable(head(joined_df(), input$n3),
-      rownames = FALSE,
-      # remove visual clutter
-      options = list(dom = "t")
-    )
-  })
-
+ 
+output$table_out <- reactive({renderDT(
+               DT::datatable(head(joined_df(), input$n3),
+                             rownames = FALSE,
+                             # remove visual clutter
+                             options = list(dom = "t")
+                             )
+  
+               )
+             })
 
 
 
@@ -178,7 +180,7 @@ server <- function(input, output, session) {
 
   # output table summaries  -------------------------------------------------
 
-  output$dimensions_output <- renderPrint({
+output$dimensions_output <- renderPrint({
     paste(
       "Dimensions =",
       paste(dim(joined_df()),
@@ -187,7 +189,7 @@ server <- function(input, output, session) {
     )
   })
 
-  output$colnames_output <- renderPrint({
+output$colnames_output <- renderPrint({
     paste(
       "Column names =",
       paste(names(joined_df()),

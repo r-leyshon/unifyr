@@ -15,12 +15,13 @@ h3 {
   color: white;
   font-family: Arial;
   padding-left: 3px;
+  padding-right: 1em;
   border-radius: 4px;
   max-height: 100%;
   height: 2.5em;
   max-width: 100%;
   padding-top: 10px;
-  /*word-wrap: break-word;*/
+  word-wrap: break-word;
   word-break: break-all;
 }
 
@@ -67,7 +68,11 @@ h3 {
 #optional {
   display: block;
   position: relative;
-  right: 2.5%;
-  width: 120%;
+  /*right: 2.5%;*/
+  width: 150%;
 }
 
+#execute {
+  float: right;
+  color: #ce3487;
+}

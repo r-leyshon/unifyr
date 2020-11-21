@@ -17,7 +17,7 @@ ui <- fluidPage(
   titlePanel(title = tags$header(
     class = "banner", tags$h1(
       # app name 
-      tags$strong("unifyR v1.6"), id = "appname"),
+      tags$strong("unifyR v1.7"), id = "appname"),
     # github link
     tags$a(href = "https://github.com/r-leyshon/unifyr",
            target='_blank',

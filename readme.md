@@ -6,6 +6,15 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## Changelog
 
+### Version 1.7
+**Frontend**
+* Action Button included
+
+**Backend**
+* Output endpoints wait for user press of action, using observeEvent
+* Output objects collated within reactivevalues list
+
+
 ### Version 1.6
 **Frontend**
 * CSS styling applied.

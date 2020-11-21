@@ -105,7 +105,14 @@ server <- function(input, output, session) {
 
   # join the data -----------------------------------------------------------
 
-  joined_df <- reactive({.execute_join(df_a_full(),
+  joined_df <- reactiveValues(data = NULL,
+                              title = NULL,
+                              dimensions = NULL,
+                              colnames = NULL)
+  
+observeEvent(input$execute, {
+  
+  joined_df$data <- .execute_join(df_a_full(),
                                df_b_full(),
                                join_function(),
                                key_columns_a = key_a(),
@@ -113,26 +120,31 @@ server <- function(input, output, session) {
                                )
     })
 
+
+observeEvent(input$execute, {
+  joined_df$title <- paste("Head of Output Data:",
+                                  input$df_a,
+                                  paste0(input$join_type, "ed to "),
+                                  input$df_b)})
+
   # render the joined df ----------------------------------------------------
 
 
   # generate output df name for use in dynamic title
-output$joined_title <- renderText({paste("Head of Output Data:",
-                                         input$df_a,
-                                         paste0(input$join_type, "ed to "),
-                                         input$df_b)})
+output$joined_title <- renderText({
+  joined_df$title
+  })
   
   # render the joined df head
  
-output$table_out <- reactive({renderDT(
-               DT::datatable(head(joined_df(), input$n3),
+output$table_out <- renderDT({
+  if (is.null(joined_df$data)) return()
+               DT::datatable(head(joined_df$data, input$n3),
                              rownames = FALSE,
                              # remove visual clutter
                              options = list(dom = "t")
                              )
-  
-               )
-             })
+  })
 
 
 
@@ -180,22 +192,30 @@ output$table_out <- reactive({renderDT(
 
   # output table summaries  -------------------------------------------------
 
+observeEvent(input$execute,{
+  joined_df$dimensions <- paste(
+    "Dimensions =",
+    paste(dim(joined_df$data),
+          collapse = " x ")
+  )
+})
+  
 output$dimensions_output <- renderPrint({
-    paste(
-      "Dimensions =",
-      paste(dim(joined_df()),
-        collapse = " x "
-      )
-    )
+  if (is.null(joined_df$dimensions)) return("No output data, did you press Go?")
+  joined_df$dimensions
   })
 
-output$colnames_output <- renderPrint({
-    paste(
-      "Column names =",
-      paste(names(joined_df()),
-        collapse = ", "
-      )
+observeEvent(input$execute,{
+  joined_df$colnames <- paste(
+    "Column names =",
+    paste(names(joined_df$data),
+          collapse = ", ")
     )
+})
+
+output$colnames_output <- renderPrint({
+  if (is.null(joined_df$colnames)) return("No output data, did you press Go?")
+  joined_df$colnames
   })
 
 

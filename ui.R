@@ -111,7 +111,7 @@ helper(
       colour = "#ce3487"),
 tags$br(),
 tags$hr(),
-tags$h3("Step 4: Execute The Join!",
+tags$h3(id = "execute_title", "Step 4: Execute The Join!",
         actionButton(
           inputId = "execute", label = "Go!", icon = icon("play-circle")))
 

@@ -71,6 +71,12 @@ guide <- Cicerone$
     and the order of selection matters."
   )$
   step(
+    el = "execute_title",
+    title = "Execute the join",
+    description = "This app waits for you to make your selections and press
+    'go!' before performing the join."
+  )$
+  step(
     el = "nrow1",
     title = "Number of rows to display.",
     description = "Here you can increase or decrease the number of rows to 

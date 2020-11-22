@@ -10,7 +10,7 @@ library(cicerone)
 df_env <- new.env()
 
 # load_cache --------------------------------------------------------------
-df_env$gapminder_full <- readRDS("cache/gapminder.rds")
+df_env$gapminder_gdp <- readRDS("cache/gapminder_gdp.rds")
 df_env$gapminder_africa <- readRDS("cache/gapminder_africa.rds")
 df_env$gapminder_zimbabwe <- readRDS("cache/gapminder_zimbabwe.rds")
 
@@ -25,7 +25,7 @@ available_data <- objects(name = df_env, sorted = TRUE, all.names = FALSE)
 # set names of all slots to their object names
 listed_data <- setNames(
 list(df_env$gapminder_africa,
-     df_env$gapminder_full,
+     df_env$gapminder_gdp,
      df_env$gapminder_zimbabwe),
 available_data)
 

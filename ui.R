@@ -55,7 +55,7 @@ helper(
         selectInput(inputId = "df_b",
           label = "Select Data 2:",
           available_data,
-          selected = "gapminder_full"
+          selected = "gapminder_gdp"
         ),
         type = "markdown",
         content = "rhs",

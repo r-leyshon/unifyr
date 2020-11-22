@@ -10,6 +10,7 @@ Unifyr is an educational application, helping learners to develop an intuition f
 **Frontend**
 * Action Button included
 * Updated guide to include a step for actionButton
+* Available data updated to reinforce need for join - LHS & RHS now have different value columns.
 
 **Backend**
 * Output endpoints wait for user press of action, using observeEvent
@@ -94,12 +95,8 @@ Unifyr is an educational application, helping learners to develop an intuition f
 
 ## To do
 
-* Update data structure to reinforce the notion of why joins are required: some 
-data of interest needs to be available on either side of the join. Currently,
-the LHS contains nothing of utility relative to the RHS.
 * Include a 'why join data' helper to help reinforce the need for data joins.
 * Upload own datasets to perform joins
-* include a run button and pause join execution until ready
 * ~~Output joined df to file~~ May encourage non-reproducible workflow
 
 
